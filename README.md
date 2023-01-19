@@ -29,3 +29,12 @@ An application to create circles.
 
 ![2023-01-19 (4)](https://user-images.githubusercontent.com/97961673/213449197-f7b29049-dbe7-4ce2-a50d-162651b61713.png)
 
+--project6--
+
+A jQuery project that turns any ordinary html table into a formatted table with paging 
+facility. Each page shows maximum 5 rows, and a listbox is dynamically created based on the number of rows 
+in the table.
+
+![2023-01-19 (5)](https://user-images.githubusercontent.com/97961673/213449732-4466f2ce-02cd-4971-9b40-c746140eb6bd.png)
+
+
