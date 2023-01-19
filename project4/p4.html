@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jquery-3.1.1.js" type="text/javascript"></script>
+        <style>
+            .circle { position:absolute; width: 0; height: 0; background: #000; border-radius: 50%;}
+            #colors { position: absolute; z-index: 1; background: #000; display:none }
+            td { width:30px; height: 20px;  }
+        </style>
+        <script>
+            var currentCircle = null ;
+            $(function() {
+                // ADDING CIRCLE
+                var timer  ;
+                
+                $(document).mousedown(function(e) {
+                    if (e.which === 3) return ; // ignore right mouse button
+                    $("<div class='circle'>").appendTo("body").css({top: e.pageY , left: e.pageX })
+                    $("#colors").hide();
+                    timer = setInterval(function() {
+                        var circle = $("div:last") ;
+                        var size = circle.width() ;
+                        var pos = circle.offset();
+                        size+=4;
+                        pos.top -= 2 ;
+                        pos.left -= 2 ;
+                        circle.css("width", size)
+                            .css("height", size)
+                            .offset(pos) ;
+                    }, 20) ;
+                }).mouseup(function(e){
+                       clearInterval(timer) ;
+                });
+
+                // COLOR PALETTE
+                // Event Delagation : Show color palette for mouse right click on circles.
+                $(document).on("contextmenu", ".circle", function(e) {
+                    $("#colors").show().css({top:e.pageY, left:e.pageX});
+                    currentCircle = $(e.target) ;
+                    e.preventDefault();
+                })
+
+                // COLOR TABLE
+                var colorTable = ["#600", "#060", "#006", "#A00", "#0A0", "#00A", "#F00", "#0F0", "#00F"];
+                $("td").each(function(i){
+                   $(this).css("background", colorTable[i]); 
+                })
+                .click(function(e){
+                     currentCircle.css("background-color", $(this).css('background-color')) ;
+                     $("#colors").hide();
+                })
+                .mousedown(function(e){ e.stopPropagation();}); // prevent additional circle for left mouse button down
+
+                // Hide color palette on mouse right click over #color table  
+                $("#colors").contextmenu(function(e){ 
+                    $(this).hide();
+                    e.preventDefault(); 
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <table id="colors">
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+        </table>
+    </body>
+</html>
